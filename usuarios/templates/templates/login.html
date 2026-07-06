@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body style="background: linear-gradient(135deg,#0d6efd,#6f42c1); min-height:100vh;">
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center vh-100">
+
+        <div class="col-md-5">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+
+                    {% if request.session.tipo == "admin" %}
+
+                        <i class="bi bi-person-workspace display-2"></i>
+
+                        <h2 class="fw-bold">
+                            Reporte de Daños
+                        </h2>
+
+                        <h4>
+                            Acceso Administrativo
+                        </h4>
+
+                    {% elif request.session.tipo == "usuario" %}
+
+                        <i class="bi bi-person-circle display-2"></i>
+
+                        <h2 class="fw-bold">
+                            Reporte de Daños
+                        </h2>
+
+                        <h4>
+                            Acceso de Usuario
+                        </h4>
+
+                    {% else %}
+
+                        <i class="bi bi-person-circle display-2"></i>
+
+                        <h2 class="fw-bold">
+                            Reporte de Daños
+                        </h2>
+
+                        <h4>
+                            Inicio de Sesión
+                        </h4>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-person-fill"></i>
+                                Usuario
+                            </label>
+
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-lock-fill"></i>
+                                Contraseña
+                            </label>
+
+                            {{ form.password }}
+                        </div>
+
+                        <button class="btn btn-primary w-100 shadow">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Ingresar
+                        </button>
+
+                        <hr>
+
+                        <div class="text-center">
+
+                            <a href="{% url 'registro' %}" class="btn btn-success w-100 mb-2">
+                                <i class="bi bi-person-plus-fill"></i>
+                                Crear cuenta
+                            </a>
+
+                            <a href="{% url 'recuperar_password' %}">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="card-footer text-center bg-light rounded-bottom-4">
+
+                    <small class="text-muted">
+                        <i class="bi bi-shield-lock"></i>
+                        Acceso seguro
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

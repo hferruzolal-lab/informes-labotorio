@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Cuenta</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-success text-white text-center">
+
+                    <h2>
+                        <i class="bi bi-person-plus-fill"></i>
+                        Crear Cuenta
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        {{ formulario.as_p }}
+
+                        <button class="btn btn-success w-100">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Registrarse
+
+                        </button>
+
+                    </form>
+
+                    <hr>
+
+                    <div class="text-center">
+
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary">
+
+                            <i class="bi bi-box-arrow-in-right"></i>
+
+                            Ya tengo una cuenta
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer text-center text-muted">
+
+                    Reporte de Daños
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

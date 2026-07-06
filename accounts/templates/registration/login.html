@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body style="background:#eef3f9;">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white text-center">
+
+                    {% if request.session.tipo == "admin" %}
+
+                        <i class="bi bi-person-workspace display-2"></i>
+                        <h2 class="fw-bold">Reporte de Daños</h2>
+                        <h4>Acceso Administrativo</h4>
+
+                    {% elif request.session.tipo == "usuario" %}
+
+                        <i class="bi bi-person-circle display-2"></i>
+                        <h2 class="fw-bold">Reporte de Daños</h2>
+                        <h4>Acceso de Usuario</h4>
+
+                    {% else %}
+
+                        <i class="bi bi-person-circle display-2"></i>
+                        <h2 class="fw-bold">Reporte de Daños</h2>
+                        <h4>Inicio de Sesión</h4>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                Usuario o contraseña incorrectos.
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Usuario</label>
+
+                            <input type="text"
+                                   name="username"
+                                   class="form-control"
+                                   placeholder="Ingrese su usuario"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+
+                            <input type="password"
+                                   name="password"
+                                   class="form-control"
+                                   placeholder="Ingrese su contraseña"
+                                   required>
+                        </div>
+
+                        <button class="btn btn-primary w-100 mb-3">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Ingresar
+                        </button>
+
+                    </form>
+
+                    <a href="{% url 'registro' %}" class="btn btn-success w-100 mb-2">
+                        <i class="bi bi-person-plus-fill"></i>
+                        Crear cuenta
+                    </a>
+
+                    <div class="text-center">
+                        <a href="{% url 'recuperar_password' %}">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <hr>
+
+                    <a href="/" class="btn btn-secondary w-100">
+                        <i class="bi bi-arrow-left"></i>
+                        Volver
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

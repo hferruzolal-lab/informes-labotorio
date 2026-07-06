@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Reportes del Usuario</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="card shadow-lg">
+
+<div class="card-header bg-primary text-white">
+
+<h2>
+
+<i class="bi bi-file-earmark-text-fill"></i>
+
+Reportes de {{ usuario.username }}
+
+</h2>
+
+</div>
+
+<div class="card-body">
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Nombre</th>
+
+<th>Cédula</th>
+
+<th>Laboratorio</th>
+
+<th>Equipo</th>
+
+<th>Descripción</th>
+
+<th>Estado</th>
+
+<th>Fecha</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for reporte in reportes %}
+
+<tr>
+
+<td>{{ reporte.nombre }}</td>
+
+<td>{{ reporte.cedula }}</td>
+
+<td>{{ reporte.laboratorio }}</td>
+
+<td>{{ reporte.equipo }}</td>
+
+<td>{{ reporte.descripcion }}</td>
+
+<td>
+
+{% if reporte.estado == "Pendiente" %}
+
+<span class="badge bg-danger">Pendiente</span>
+
+{% elif reporte.estado == "En proceso" %}
+
+<span class="badge bg-warning text-dark">En proceso</span>
+
+{% else %}
+
+<span class="badge bg-success">Resuelto</span>
+
+{% endif %}
+
+</td>
+
+<td>{{ reporte.fecha|date:"d/m/Y H:i" }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+Este usuario no tiene reportes registrados.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<a href="{% url 'lista_usuarios' %}" class="btn btn-secondary">
+
+<i class="bi bi-arrow-left"></i>
+
+Volver a usuarios
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

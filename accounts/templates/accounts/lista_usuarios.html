@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Registrados</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-dark text-white">
+
+            <h2>
+                <i class="bi bi-people-fill"></i>
+                Usuarios Registrados
+            </h2>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Activo</th>
+                            <th>Administrador</th>
+                            <th>Reportes</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for usuario in usuarios %}
+
+                        <tr>
+                            <td>{{ usuario.id }}</td>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+
+                            <td>
+                                {% if usuario.is_active %}
+                                    <span class="badge bg-success">Activo</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Bloqueado</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if usuario.is_superuser %}
+                                    <span class="badge bg-primary">Administrador</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Usuario</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ usuario.total_reportes }}
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'reportes_usuario' usuario.id %}"
+                                   class="btn btn-primary btn-sm mb-1">
+                                    <i class="bi bi-eye-fill"></i>
+                                    Ver reportes
+                                </a>
+
+                                {% if usuario != request.user %}
+
+                                    <a href="{% url 'cambiar_admin_usuario' usuario.id %}"
+                                       class="btn btn-warning btn-sm mb-1">
+
+                                        {% if usuario.is_superuser %}
+                                            Quitar admin
+                                        {% else %}
+                                            Hacer admin
+                                        {% endif %}
+
+                                    </a>
+
+                                    <a href="{% url 'cambiar_estado_usuario' usuario.id %}"
+                                       class="btn btn-secondary btn-sm mb-1">
+
+                                        {% if usuario.is_active %}
+                                            <i class="bi bi-lock-fill"></i>
+                                            Bloquear
+                                        {% else %}
+                                            <i class="bi bi-unlock-fill"></i>
+                                            Activar
+                                        {% endif %}
+
+                                    </a>
+
+                                    <a href="{% url 'eliminar_usuario' usuario.id %}"
+                                       class="btn btn-danger btn-sm mb-1"
+                                       onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">
+                                        <i class="bi bi-trash-fill"></i>
+                                        Eliminar
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="badge bg-info text-dark">
+                                        Tu cuenta
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                No hay usuarios registrados.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <a href="/reporte/" class="btn btn-primary">
+                <i class="bi bi-arrow-left"></i>
+                Volver
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
