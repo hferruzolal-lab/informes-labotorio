@@ -135,14 +135,16 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Correo Gmail
 
+# Correo Gmail
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = os.environ.get("samuelferruzola02@gmail.com", "")
-EMAIL_HOST_PASSWORD = os.environ.get("rbxp xyst kqmx kgrb", "")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "samuelferruzola02@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "rbxp xyst kqmx kgrb")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
