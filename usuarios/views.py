@@ -9,13 +9,17 @@ from django.conf import settings
 
 
 def recuperar_password(request):
+
     if request.method == "POST":
+
         form = CorreoForm(request.POST)
 
         if form.is_valid():
+
             correo = form.cleaned_data["correo"]
 
             if not User.objects.filter(email=correo).exists():
+
                 form.add_error(
                     "correo",
                     "No existe una cuenta registrada con ese correo."
@@ -32,19 +36,35 @@ def recuperar_password(request):
                 codigo=codigo
             )
 
-            send_mail(
-                "Código de recuperación",
-                f"Tu código de recuperación es: {codigo}",
-                settings.EMAIL_HOST_USER,
-                [correo],
-                fail_silently=False,
-            )
+            try:
+
+                send_mail(
+                    "Código de recuperación",
+                    f"Tu código de recuperación es: {codigo}",
+                    settings.EMAIL_HOST_USER,
+                    [correo],
+                    fail_silently=False,
+                )
+
+            except Exception as error:
+
+                print("ERROR AL ENVIAR CORREO:", error)
+
+                form.add_error(
+                    "correo",
+                    "No se pudo enviar el código. Revisa el correo configurado."
+                )
+
+                return render(request, "usuarios/recuperar.html", {
+                    "form": form
+                })
 
             request.session["correo_recuperacion"] = correo
 
             return redirect("verificar_codigo")
 
     else:
+
         form = CorreoForm()
 
     return render(request, "usuarios/recuperar.html", {
@@ -53,6 +73,7 @@ def recuperar_password(request):
 
 
 def verificar_codigo(request):
+
     correo = request.session.get("correo_recuperacion")
 
     if not correo:
@@ -61,9 +82,11 @@ def verificar_codigo(request):
     error = ""
 
     if request.method == "POST":
+
         form = CodigoForm(request.POST)
 
         if form.is_valid():
+
             codigo = form.cleaned_data["codigo"]
 
             existe = CodigoRecuperacion.objects.filter(
@@ -72,6 +95,7 @@ def verificar_codigo(request):
             ).exists()
 
             if existe:
+
                 request.session["codigo_correcto"] = True
 
                 CodigoRecuperacion.objects.filter(
@@ -80,10 +104,13 @@ def verificar_codigo(request):
                 ).delete()
 
                 return redirect("cambiar_password")
+
             else:
+
                 error = "Código incorrecto."
 
     else:
+
         form = CodigoForm()
 
     return render(request, "usuarios/verificar_codigo.html", {
@@ -93,20 +120,25 @@ def verificar_codigo(request):
 
 
 def cambiar_password(request):
+
     if not request.session.get("codigo_correcto"):
         return redirect("recuperar_password")
 
     correo = request.session.get("correo_recuperacion")
 
     if request.method == "POST":
+
         form = NuevaPasswordForm(request.POST)
 
         if form.is_valid():
+
             password = form.cleaned_data["password"]
             confirmar = form.cleaned_data["confirmar"]
 
             if password == confirmar:
+
                 usuario = User.objects.get(email=correo)
+
                 usuario.set_password(password)
                 usuario.save()
 
@@ -114,11 +146,22 @@ def cambiar_password(request):
 
                 request.session.flush()
 
-                messages.success(request, "Contraseña actualizada correctamente.")
+                messages.success(
+                    request,
+                    "Contraseña actualizada correctamente."
+                )
 
                 return redirect("/accounts/login/")
 
+            else:
+
+                form.add_error(
+                    "confirmar",
+                    "Las contraseñas no coinciden."
+                )
+
     else:
+
         form = NuevaPasswordForm()
 
     return render(request, "usuarios/cambiar_password.html", {
