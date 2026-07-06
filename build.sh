@@ -8,4 +8,4 @@ python manage.py migrate
 
 python crear_superusuario.py
 
-python manage.py collectstatic --no-inputpython crear_superusuario.py
+python manage.py collectstatic --noinput
