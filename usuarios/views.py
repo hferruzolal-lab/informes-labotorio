@@ -48,11 +48,11 @@ def recuperar_password(request):
 
             except Exception as error:
 
-                print("ERROR AL ENVIAR CORREO:", error)
+                print("ERROR AL ENVIAR CORREO:", repr(error), flush=True)
 
                 form.add_error(
                     "correo",
-                    "No se pudo enviar el código. Revisa el correo configurado."
+                    f"No se pudo enviar el código: {error}"
                 )
 
                 return render(request, "usuarios/recuperar.html", {
