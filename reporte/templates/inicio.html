@@ -290,6 +290,86 @@
                 font-size: 23px;
             }
         }
+        /* USUARIO PEQUEÑO */
+
+.usuario-panel {
+    background: white;
+    border-radius: 18px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+}
+
+.usuario-info span {
+    color: #555;
+}
+
+.usuario-info strong {
+    color: #0d6efd;
+    font-size: 20px;
+}
+
+.usuario-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-salir {
+    margin: 0;
+}
+
+.btn-panel {
+    border-radius: 12px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* CELULAR */
+
+@media (max-width: 576px) {
+    .usuario-panel {
+        padding: 14px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .usuario-info {
+        justify-content: center;
+        font-size: 17px;
+    }
+
+    .usuario-info strong {
+        font-size: 19px;
+    }
+
+    .usuario-acciones {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .btn-panel {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+}
 
     </style>
 
@@ -407,51 +487,36 @@
 
     </div>
 
-    <!-- USUARIO -->
+  <!-- USUARIO -->
 
-    <div class="usuario-barra">
+<div class="usuario-panel">
 
-        <div class="usuario-texto">
+    <div class="usuario-info">
+        <span>Bienvenido,</span>
+        <strong>{{ request.user.username }}</strong>
+    </div>
 
-            <h5>
+    <div class="usuario-acciones">
 
-                Bienvenido,<br>
+        <a href="{% url 'perfil' %}" class="btn btn-outline-primary btn-sm btn-panel">
+            <i class="bi bi-person-circle"></i>
+            Mi Perfil
+        </a>
 
-                <span>{{ request.user.username }}</span>
+        <form action="{% url 'logout' %}" method="POST" class="form-salir">
+            {% csrf_token %}
 
-            </h5>
-
-        </div>
-
-        <div class="usuario-botones">
-
-            <a href="{% url 'perfil' %}" class="btn btn-primary btn-perfil">
-
-                <i class="bi bi-person-circle"></i>
-
-                Mi Perfil
-
-            </a>
-
-            <form action="{% url 'logout' %}" method="POST" class="form-salir">
-
-                {% csrf_token %}
-
-                <button class="btn btn-danger btn-salir">
-
-                    <i class="bi bi-box-arrow-right"></i>
-
-                    Cerrar sesión
-
-                </button>
-
-            </form>
-
-        </div>
+            <button class="btn btn-outline-danger btn-sm btn-panel">
+                <i class="bi bi-box-arrow-right"></i>
+                Salir
+            </button>
+        </form>
 
     </div>
 
-    <hr>
+</div>
+
+<hr>
 
     {% if user.is_superuser %}
 
@@ -1005,6 +1070,7 @@
         }
 
     });
+    
 
 </script>
 
