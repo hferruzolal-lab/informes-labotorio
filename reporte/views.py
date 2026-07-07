@@ -8,9 +8,8 @@ from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from openpyxl import Workbook
-from django.core.mail import send_mail
-from django.conf import settings
 from django.db.models.functions import TruncMonth
+from config.brevo_email import enviar_correo_brevo
 import json
 
 
@@ -115,18 +114,27 @@ def editar_reporte(request, id):
 
                 if reporte_editado.usuario and reporte_editado.usuario.email:
 
-                    send_mail(
-                        "Actualización de reporte",
-                        f"Hola {reporte_editado.usuario.username},\n\n"
-                        f"El estado de tu reporte ha sido actualizado.\n\n"
-                        f"Equipo: {reporte_editado.equipo}\n"
-                        f"Laboratorio: {reporte_editado.laboratorio}\n"
-                        f"Nuevo estado: {reporte_editado.estado}\n\n"
-                        f"Gracias por utilizar Nuestro Reporte de Daños.",
-                        settings.EMAIL_HOST_USER,
-                        [reporte_editado.usuario.email],
-                        fail_silently=False,
-                    )
+                    try:
+
+                        enviar_correo_brevo(
+                            reporte_editado.usuario.email,
+                            "Actualización de reporte",
+                            f"Hola {reporte_editado.usuario.username},\n\n"
+                            f"El estado de tu reporte ha sido actualizado.\n\n"
+                            f"Equipo: {reporte_editado.equipo}\n"
+                            f"Laboratorio: {reporte_editado.laboratorio}\n"
+                            f"Estado anterior: {estado_anterior}\n"
+                            f"Nuevo estado: {reporte_editado.estado}\n\n"
+                            f"Gracias por utilizar Nuestro Reporte de Daños."
+                        )
+
+                    except Exception as error:
+
+                        print(
+                            "ERROR AL ENVIAR CORREO DE ESTADO:",
+                            repr(error),
+                            flush=True
+                        )
 
             return redirect("inicio")
 
@@ -244,6 +252,8 @@ def reporte_excel(request):
     wb.save(response)
 
     return response
+
+
 @login_required
 def historial_reporte(request, id):
 
@@ -266,6 +276,8 @@ def historial_reporte(request, id):
             "historial": historial
         }
     )
+
+
 @login_required
 def estadisticas(request):
 
