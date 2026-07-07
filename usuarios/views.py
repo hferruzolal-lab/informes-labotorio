@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+
 from .forms import CorreoForm, CodigoForm, NuevaPasswordForm
 from .models import CodigoRecuperacion
+
+from config.brevo_email import enviar_correo_brevo
+
 import random
-from django.core.mail import send_mail
-from django.conf import settings
 
 
 def recuperar_password(request):
@@ -38,12 +40,10 @@ def recuperar_password(request):
 
             try:
 
-                send_mail(
+                enviar_correo_brevo(
+                    correo,
                     "Código de recuperación",
-                    f"Tu código de recuperación es: {codigo}",
-                    settings.EMAIL_HOST_USER,
-                    [correo],
-                    fail_silently=False,
+                    f"Tu código de recuperación es: {codigo}"
                 )
 
             except Exception as error:
