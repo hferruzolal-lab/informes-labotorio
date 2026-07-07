@@ -92,7 +92,6 @@ def validar_acceso(request):
 
     return redirect("/reporte/")
 
-
 @login_required
 def lista_usuarios(request):
 
