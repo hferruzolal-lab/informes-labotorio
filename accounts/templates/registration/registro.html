@@ -2,9 +2,8 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,71 +11,263 @@
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef3f9, #dce8f6);
+            min-height: 100vh;
+        }
+
+        .contenedor-registro {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-registro {
+            width: 100%;
+            max-width: 520px;
+            border: none;
+            border-radius: 22px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
+        }
+
+        .registro-header {
+            background: linear-gradient(90deg, #198754, #20a765);
+            color: white;
+            text-align: center;
+            padding: 28px 18px;
+        }
+
+        .registro-header i {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .registro-header h3 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .registro-body {
+            padding: 28px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #ced4da;
+            padding: 13px 14px;
+            font-size: 16px;
+            background: #f8fbff;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
+            background: white;
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .error-campo {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 576px) {
+            .contenedor-registro {
+                align-items: flex-start;
+                padding: 30px 14px 20px;
+            }
+
+            .card-registro {
+                max-width: 100%;
+                border-radius: 20px;
+            }
+
+            .registro-header {
+                padding: 24px 16px;
+            }
+
+            .registro-header i {
+                font-size: 48px;
+            }
+
+            .registro-header h3 {
+                font-size: 26px;
+            }
+
+            .registro-body {
+                padding: 22px 18px;
+            }
+
+            input {
+                font-size: 16px;
+                padding: 14px;
+            }
+
+            .btn {
+                width: 100%;
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+    </style>
 </head>
 
-<body style="background:#eef3f9;">
+<body>
 
-<div class="container mt-5">
+<div class="contenedor-registro">
 
-<div class="row justify-content-center">
+    <div class="card-registro">
 
-<div class="col-md-6">
+        <!-- TITULO -->
 
-<div class="card shadow-lg border-0">
+        <div class="registro-header">
 
-<div class="card-header bg-success text-white text-center">
+            <i class="bi bi-person-plus-fill"></i>
 
-<h3>
+            <h3>
+                Crear Cuenta
+            </h3>
 
-<i class="bi bi-person-plus-fill"></i>
+        </div>
 
-Crear Cuenta
+        <!-- FORMULARIO -->
 
-</h3>
+        <div class="registro-body">
 
-</div>
+            <form method="POST">
 
-<div class="card-body p-4">
+                {% csrf_token %}
 
-<form method="POST">
+                <!-- USUARIO -->
 
-{% csrf_token %}
+                <div class="mb-3">
+                    <label>
+                        Nombre de usuario
+                    </label>
 
-{{ formulario.as_p }}
+                    <input type="text"
+                           name="username"
+                           value="{{ formulario.username.value|default:'' }}"
+                           placeholder="Ingrese su usuario"
+                           required>
 
-<button class="btn btn-success w-100 mb-2">
+                    {% if formulario.username.errors %}
+                        <div class="error-campo">
+                            {{ formulario.username.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
 
-<i class="bi bi-check-circle-fill"></i>
+                <!-- CORREO -->
 
-Registrarse
+                <div class="mb-3">
+                    <label>
+                        Correo electrónico
+                    </label>
 
-</button>
+                    <input type="email"
+                           name="email"
+                           value="{{ formulario.email.value|default:'' }}"
+                           placeholder="Ingrese su correo"
+                           required>
 
-</form>
+                    {% if formulario.email.errors %}
+                        <div class="error-campo">
+                            {{ formulario.email.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
 
-<a href="/accounts/login/" class="btn btn-primary w-100 mb-2">
+                <!-- CONTRASEÑA -->
 
-<i class="bi bi-box-arrow-in-right"></i>
+                <div class="mb-3">
+                    <label>
+                        Contraseña
+                    </label>
 
-Ya tengo cuenta
+                    <input type="password"
+                           name="password"
+                           placeholder="Ingrese su contraseña"
+                           required>
 
-</a>
+                    {% if formulario.password.errors %}
+                        <div class="error-campo">
+                            {{ formulario.password.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
 
-<a href="/" class="btn btn-secondary w-100">
+                <!-- CONFIRMAR -->
 
-<i class="bi bi-arrow-left"></i>
+                <div class="mb-4">
+                    <label>
+                        Confirmar contraseña
+                    </label>
 
-Volver
+                    <input type="password"
+                           name="confirmar"
+                           placeholder="Repita su contraseña"
+                           required>
 
-</a>
+                    {% if formulario.confirmar.errors %}
+                        <div class="error-campo">
+                            {{ formulario.confirmar.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
 
-</div>
+                <button class="btn btn-success w-100 mb-2">
 
-</div>
+                    <i class="bi bi-check-circle-fill"></i>
 
-</div>
+                    Registrarse
 
-</div>
+                </button>
+
+            </form>
+
+            <a href="/accounts/login/" class="btn btn-primary w-100 mb-2">
+
+                <i class="bi bi-box-arrow-in-right"></i>
+
+                Ya tengo cuenta
+
+            </a>
+
+            <a href="/" class="btn btn-secondary w-100">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Volver
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

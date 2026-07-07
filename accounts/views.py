@@ -29,10 +29,12 @@ def registro(request):
 
             email = formulario.cleaned_data["email"]
 
+            # CORREO REPETIDO
+
             if User.objects.filter(email__iexact=email).exists():
 
-                messages.error(
-                    request,
+                formulario.add_error(
+                    "email",
                     "Este correo ya tiene una cuenta registrada. Use otro correo."
                 )
 
