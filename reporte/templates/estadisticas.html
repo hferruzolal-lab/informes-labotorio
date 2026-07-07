@@ -253,13 +253,25 @@
 </div>
 
 <script>
+    const laboratoriosLabels = JSON.parse('{{ laboratorios_labels|default:"[]"|escapejs }}');
+    const laboratoriosData = JSON.parse('{{ laboratorios_data|default:"[]"|escapejs }}');
+
+    const mesesLabels = JSON.parse('{{ meses_labels|default:"[]"|escapejs }}');
+    const mesesData = JSON.parse('{{ meses_data|default:"[]"|escapejs }}');
+
+    const usuariosLabels = JSON.parse('{{ usuarios_labels|default:"[]"|escapejs }}');
+    const usuariosData = JSON.parse('{{ usuarios_data|default:"[]"|escapejs }}');
+
+    const estadosLabels = JSON.parse('{{ estados_labels|default:"[]"|escapejs }}');
+    const estadosData = JSON.parse('{{ estados_data|default:"[]"|escapejs }}');
+
     new Chart(document.getElementById("graficoLaboratorio"), {
         type: "bar",
         data: {
-            labels: {{ laboratorios_labels|safe }},
+            labels: laboratoriosLabels,
             datasets: [{
                 label: "Cantidad de reportes",
-                data: {{ laboratorios_data|safe }},
+                data: laboratoriosData,
                 backgroundColor: "#0d6efd"
             }]
         },
@@ -272,10 +284,10 @@
     new Chart(document.getElementById("graficoMes"), {
         type: "bar",
         data: {
-            labels: {{ meses_labels|safe }},
+            labels: mesesLabels,
             datasets: [{
                 label: "Reportes por mes",
-                data: {{ meses_data|safe }},
+                data: mesesData,
                 backgroundColor: "#198754"
             }]
         },
@@ -288,10 +300,10 @@
     new Chart(document.getElementById("graficoUsuario"), {
         type: "bar",
         data: {
-            labels: {{ usuarios_labels|safe }},
+            labels: usuariosLabels,
             datasets: [{
                 label: "Reportes por usuario",
-                data: {{ usuarios_data|safe }},
+                data: usuariosData,
                 backgroundColor: "#0dcaf0"
             }]
         },
@@ -304,9 +316,9 @@
     new Chart(document.getElementById("graficoEstado"), {
         type: "pie",
         data: {
-            labels: {{ estados_labels|safe }},
+            labels: estadosLabels,
             datasets: [{
-                data: {{ estados_data|safe }},
+                data: estadosData,
                 backgroundColor: [
                     "#dc3545",
                     "#ffc107",
@@ -320,7 +332,4 @@
         }
     });
 </script>
-
-</body>
-
 </html>
