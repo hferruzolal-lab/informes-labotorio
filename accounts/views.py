@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib import messages
 from django.db.models import Count
 
 from .forms import RegistroForm, PerfilForm
@@ -25,6 +26,19 @@ def registro(request):
         formulario = RegistroForm(request.POST)
 
         if formulario.is_valid():
+
+            email = formulario.cleaned_data["email"]
+
+            if User.objects.filter(email__iexact=email).exists():
+
+                messages.error(
+                    request,
+                    "Este correo ya tiene una cuenta registrada. Use otro correo."
+                )
+
+                return render(request, "registration/registro.html", {
+                    "formulario": formulario
+                })
 
             usuario = User.objects.create_user(
                 username=formulario.cleaned_data["username"],
