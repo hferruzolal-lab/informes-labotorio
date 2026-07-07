@@ -3,13 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import Count
-from django.http import HttpResponse
 
-from .forms import RegistroForm, PerfilForm
-from reporte.models import Reporte
-
-from .forms import RegistroForm, PerfilForm
-from reporte.models import Reporte
 from .forms import RegistroForm, PerfilForm
 from reporte.models import Reporte
 
@@ -56,19 +50,24 @@ def validar_acceso(request):
 
     tipo = request.session.get("tipo")
 
-    # Si no seleccionó tipo de acceso
+    # VALIDAR TIPO
+
     if not tipo:
+
         logout(request)
+
         return redirect("/")
 
-    # Usuario normal intentando entrar como administrador
+    # USUARIO NORMAL INTENTANDO ENTRAR COMO ADMIN
+
     if tipo == "admin" and not request.user.is_superuser:
 
         logout(request)
 
         return render(request, "accounts/error_admin.html")
 
-    # Administrador intentando entrar como usuario
+    # ADMIN INTENTANDO ENTRAR COMO USUARIO
+
     if tipo == "usuario" and request.user.is_superuser:
 
         logout(request)
@@ -76,6 +75,7 @@ def validar_acceso(request):
         return render(request, "accounts/error_usuario.html")
 
     return redirect("/reporte/")
+
 
 @login_required
 def lista_usuarios(request):
@@ -90,6 +90,8 @@ def lista_usuarios(request):
     return render(request, "accounts/lista_usuarios.html", {
         "usuarios": usuarios
     })
+
+
 @login_required
 def cambiar_estado_usuario(request, id):
 
