@@ -1,75 +1,204 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef3f9, #dce8f6);
+            min-height: 100vh;
+        }
+
+        .contenedor {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-registro {
+            width: 100%;
+            max-width: 460px;
+            border: none;
+            border-radius: 22px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, #198754, #20a765);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .card-header i {
+            font-size: 58px;
+            margin-bottom: 10px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 28px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #ced4da;
+            padding: 13px 14px;
+            font-size: 16px;
+            background: #f8fbff;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
+            background: white;
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .errorlist {
+            color: #dc3545;
+            margin-top: 8px;
+            padding-left: 18px;
+        }
+
+        @media (max-width: 576px) {
+            .contenedor {
+                align-items: flex-start;
+                padding: 28px 14px;
+            }
+
+            .card-registro {
+                max-width: 100%;
+                border-radius: 20px;
+            }
+
+            .card-header {
+                padding: 26px 18px;
+            }
+
+            .card-header i {
+                font-size: 52px;
+            }
+
+            .card-header h2 {
+                font-size: 27px;
+            }
+
+            .card-body {
+                padding: 24px 18px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+<div class="contenedor">
 
-    <div class="row justify-content-center">
+    <div class="card-registro">
 
-        <div class="col-md-6">
+        <div class="card-header">
+            <i class="bi bi-person-plus-fill"></i>
+            <h2>Crear Cuenta</h2>
+        </div>
 
-            <div class="card shadow-lg border-0">
+        <div class="card-body">
 
-                <div class="card-header bg-success text-white text-center">
-
-                    <h2>
-                        <i class="bi bi-person-plus-fill"></i>
-                        Crear Cuenta
-                    </h2>
-
-                </div>
-
-                <div class="card-body">
-
-                    <form method="POST">
-
-                        {% csrf_token %}
-
-                        {{ formulario.as_p }}
-
-                        <button class="btn btn-success w-100">
-
-                            <i class="bi bi-check-circle"></i>
-
-                            Registrarse
-
-                        </button>
-
-                    </form>
-
-                    <hr>
-
-                    <div class="text-center">
-
-                        <a href="{% url 'login' %}" class="btn btn-outline-primary">
-
-                            <i class="bi bi-box-arrow-in-right"></i>
-
-                            Ya tengo una cuenta
-
-                        </a>
-
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
                     </div>
+                {% endfor %}
+            {% endif %}
 
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label>Nombre de usuario</label>
+                    <input type="text"
+                           name="username"
+                           placeholder="Ingrese su usuario"
+                           required>
                 </div>
 
-                <div class="card-footer text-center text-muted">
-
-                    Reporte de Daños
-
+                <div class="mb-3">
+                    <label>Correo electrónico</label>
+                    <input type="email"
+                           name="email"
+                           placeholder="Ingrese su correo"
+                           required>
                 </div>
 
-            </div>
+                <div class="mb-3">
+                    <label>Contraseña</label>
+                    <input type="password"
+                           name="password"
+                           placeholder="Ingrese su contraseña"
+                           required>
+                </div>
+
+                <div class="mb-4">
+                    <label>Confirmar contraseña</label>
+                    <input type="password"
+                           name="confirmar"
+                           placeholder="Repita su contraseña"
+                           required>
+                </div>
+
+                <button class="btn btn-success w-100 mb-2">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Registrarse
+                </button>
+
+            </form>
+
+            <a href="{% url 'login' %}" class="btn btn-primary w-100 mb-2">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Ya tengo cuenta
+            </a>
+
+            <a href="/" class="btn btn-secondary w-100">
+                <i class="bi bi-arrow-left"></i>
+                Volver
+            </a>
 
         </div>
 
@@ -78,4 +207,5 @@
 </div>
 
 </body>
+
 </html>
