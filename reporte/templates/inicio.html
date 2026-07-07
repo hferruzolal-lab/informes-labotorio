@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 
-
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Reporte de Daños</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -16,101 +19,280 @@
     {% endif %}
 
     <style>
-        body{
-            background:linear-gradient(135deg,#eef4ff,#f8fbff);
+
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
-        h1{
-            font-weight:bold;
+        body {
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
         }
 
-        .card{
-            border:none;
-            border-radius:18px;
-            transition:.3s;
+        h1 {
+            font-weight: bold;
         }
 
-        .card:hover{
-            transform:translateY(-6px);
-            box-shadow:0 15px 30px rgba(0,0,0,.15);
+        .card {
+            border: none;
+            border-radius: 18px;
         }
 
-        .table{
-            background:white;
-            border-radius:15px;
-            overflow:hidden;
+        .btn {
+            border-radius: 12px;
+            font-weight: 600;
         }
 
-        .btn{
-            border-radius:10px;
+        /* TITULO */
+
+        .titulo-card {
+            border-radius: 22px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
         }
 
-        footer{
-            margin-top:60px;
-            padding:25px;
-            background:#212529;
-            color:white;
-            text-align:center;
-            border-radius:20px 20px 0 0;
-        }
+        /* USUARIO */
+
         .usuario-barra {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
 
-.usuario-texto h5 {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 0;
-}
+        .usuario-texto h5 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
 
-.usuario-texto span {
-    color: #0d6efd;
-}
+        .usuario-texto span {
+            color: #0d6efd;
+        }
 
-.usuario-botones {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
+        .usuario-botones {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
-.form-salir {
-    margin: 0;
-}
+        .form-salir {
+            margin: 0;
+        }
 
-.btn-perfil,
-.btn-salir {
-    border-radius: 14px;
-    padding: 10px 22px;
-    font-size: 18px;
-    white-space: nowrap;
-}
+        .btn-perfil,
+        .btn-salir {
+            border-radius: 16px;
+            padding: 12px 24px;
+            font-size: 18px;
+            white-space: nowrap;
+        }
 
-/* Móvil */
-@media (max-width: 768px) {
-    .usuario-barra {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        /* BUSCADOR */
 
-    .usuario-botones {
-        width: 100%;
-        justify-content: center;
-        gap: 14px;
-    }
+        .buscador-card {
+            background: white;
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
 
-    .btn-perfil,
-    .btn-salir {
-        width: 100%;
-        text-align: center;
-    }
-}
+        .buscador-card input {
+            border-radius: 14px 0 0 14px;
+            font-size: 17px;
+            padding: 12px;
+        }
+
+        .buscador-card button {
+            border-radius: 0 14px 14px 0;
+            font-size: 17px;
+            padding: 12px 22px;
+        }
+
+        /* BOTONES */
+
+        .acciones-reportes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .acciones-reportes .btn {
+            border-radius: 16px;
+            padding: 12px 22px;
+            font-size: 18px;
+            min-width: 190px;
+        }
+
+        /* TABLA */
+
+        .card-tabla {
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+        }
+
+        .card-tabla .card-header {
+            padding: 18px 22px;
+        }
+
+        .tabla-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabla-scroll table {
+            min-width: 900px;
+            margin-bottom: 0;
+        }
+
+        .tabla-scroll th {
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .tabla-scroll td {
+            vertical-align: middle;
+        }
+
+        .tabla-scroll img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            padding: 30px;
+            background: #212529;
+            color: white;
+            text-align: center;
+            border-radius: 24px 24px 0 0;
+        }
+
+        footer h5 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        footer small {
+            font-size: 17px;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 768px) {
+
+            .container {
+                padding: 14px !important;
+                margin-top: 20px !important;
+            }
+
+            .titulo-card h1 {
+                font-size: 26px;
+            }
+
+            .titulo-card p {
+                font-size: 16px;
+            }
+
+            .usuario-barra {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                gap: 16px;
+            }
+
+            .usuario-texto h5 {
+                font-size: 24px;
+            }
+
+            .usuario-botones {
+                display: grid;
+                grid-template-columns: 1fr;
+                width: 100%;
+                gap: 12px;
+            }
+
+            .btn-perfil,
+            .btn-salir {
+                width: 100%;
+                font-size: 17px;
+                padding: 13px;
+            }
+
+            .buscador-card {
+                padding: 15px;
+                border-radius: 20px;
+            }
+
+            .buscador-card .input-group {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            .buscador-card input {
+                min-width: 0;
+                font-size: 15px;
+                padding: 11px;
+            }
+
+            .buscador-card button {
+                font-size: 15px;
+                padding: 11px 14px;
+                white-space: nowrap;
+            }
+
+            .acciones-reportes {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 22px 0;
+            }
+
+            .acciones-reportes .btn {
+                width: 100%;
+                min-width: 0;
+                font-size: 17px;
+                padding: 13px;
+            }
+
+            .card-tabla .card-header {
+                text-align: center;
+                padding: 16px;
+            }
+
+            .card-tabla .card-header h4 {
+                font-size: 22px;
+            }
+
+            .tabla-scroll table {
+                min-width: 850px;
+                font-size: 14px;
+            }
+
+            footer {
+                margin-top: 35px;
+                padding: 28px 15px;
+            }
+
+            footer h5 {
+                font-size: 23px;
+            }
+        }
+
     </style>
+
 </head>
 
 <body>
@@ -129,62 +311,67 @@
         </a>
 
         <button class="navbar-toggler"
+                type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#menu">
 
             <span class="navbar-toggler-icon"></span>
+
         </button>
 
         <div class="collapse navbar-collapse" id="menu">
 
-           <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto">
 
-    <li class="nav-item">
+                <li class="nav-item">
 
-        <a class="nav-link active" href="/">
+                    <a class="nav-link active" href="/">
 
-            <i class="bi bi-house-fill"></i>
+                        <i class="bi bi-house-fill"></i>
 
-            Inicio
+                        Inicio
 
-        </a>
+                    </a>
 
-    </li>
+                </li>
 
-    <li class="nav-item">
+                <li class="nav-item">
 
-        <a class="nav-link" href="#tabla">
+                    <a class="nav-link" href="#tabla">
 
-            <i class="bi bi-file-earmark-text"></i>
+                        <i class="bi bi-file-earmark-text"></i>
 
-            Reportes
+                        Reportes
 
-        </a>
+                    </a>
 
-    </li>
+                </li>
 
-    <li class="nav-item">
+                <li class="nav-item">
 
-        <a class="nav-link" href="/usuarios/">
+                    <a class="nav-link" href="/usuarios/">
 
-            <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-people-fill"></i>
 
-            Usuarios
+                        Usuarios
 
-        </a>
+                    </a>
 
-    </li>
+                </li>
 
-    <li class="nav-item">
+                <li class="nav-item">
 
-        <a class="nav-link" href="{% url 'estadisticas' %}">
-    <i class="bi bi-bar-chart-fill"></i>
-    Estadísticas
-</a>
+                    <a class="nav-link" href="{% url 'estadisticas' %}">
 
-    </li>
+                        <i class="bi bi-bar-chart-fill"></i>
 
-</ul>
+                        Estadísticas
+
+                    </a>
+
+                </li>
+
+            </ul>
 
         </div>
 
@@ -196,47 +383,73 @@
 
 <div class="container py-5">
 
-    <div class="card shadow-lg mb-4">
+    <!-- TITULO -->
+
+    <div class="card shadow-lg mb-4 titulo-card">
+
         <div class="card-body">
+
             <h1 class="text-center text-primary">
+
                 <i class="bi bi-pc-display"></i>
+
                 Reporte de Daños
+
             </h1>
 
             <p class="text-center text-muted">
+
                 Gestión de incidencias de laboratorios
+
             </p>
+
         </div>
-    </div>
-
-   <div class="usuario-barra">
-
-    <div class="usuario-texto">
-        <h5>
-            Bienvenido,<br>
-            <span>{{ request.user.username }}</span>
-        </h5>
-    </div>
-
-    <div class="usuario-botones">
-
-        <a href="{% url 'perfil' %}" class="btn btn-primary btn-perfil">
-            <i class="bi bi-person-circle"></i>
-            Mi Perfil
-        </a>
-
-        <form action="{% url 'logout' %}" method="POST" class="form-salir">
-            {% csrf_token %}
-
-            <button class="btn btn-danger btn-salir">
-                <i class="bi bi-box-arrow-right"></i>
-                Cerrar sesión
-            </button>
-        </form>
 
     </div>
 
-</div>
+    <!-- USUARIO -->
+
+    <div class="usuario-barra">
+
+        <div class="usuario-texto">
+
+            <h5>
+
+                Bienvenido,<br>
+
+                <span>{{ request.user.username }}</span>
+
+            </h5>
+
+        </div>
+
+        <div class="usuario-botones">
+
+            <a href="{% url 'perfil' %}" class="btn btn-primary btn-perfil">
+
+                <i class="bi bi-person-circle"></i>
+
+                Mi Perfil
+
+            </a>
+
+            <form action="{% url 'logout' %}" method="POST" class="form-salir">
+
+                {% csrf_token %}
+
+                <button class="btn btn-danger btn-salir">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    Cerrar sesión
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
 
     <hr>
 
@@ -247,117 +460,180 @@
     <div class="row g-4 mb-5">
 
         <div class="col-md-3">
+
             <div class="card bg-primary text-white shadow-lg">
+
                 <div class="card-body text-center">
+
                     <i class="bi bi-file-earmark-text display-4"></i>
+
                     <h5 class="mt-3">Total Reportes</h5>
+
                     <h2>{{ total }}</h2>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-md-3">
+
             <div class="card bg-danger text-white shadow-lg">
+
                 <div class="card-body text-center">
+
                     <i class="bi bi-exclamation-circle display-4"></i>
+
                     <h5 class="mt-3">Pendientes</h5>
+
                     <h2>{{ pendientes }}</h2>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-md-3">
+
             <div class="card bg-warning shadow-lg">
+
                 <div class="card-body text-center">
+
                     <i class="bi bi-hourglass-split display-4"></i>
+
                     <h5 class="mt-3">En proceso</h5>
+
                     <h2>{{ proceso }}</h2>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-md-3">
+
             <div class="card bg-success text-white shadow-lg">
+
                 <div class="card-body text-center">
+
                     <i class="bi bi-check-circle display-4"></i>
+
                     <h5 class="mt-3">Resueltos</h5>
+
                     <h2>{{ resueltos }}</h2>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
-    <!-- GRAFICOS -->
+    <!-- ESTADISTICAS -->
 
     <div id="estadisticas" class="card shadow-lg mb-5">
+
         <div class="card-header bg-dark text-white">
+
             <h4 class="mb-0">
+
                 <i class="bi bi-bar-chart-fill"></i>
+
                 Estadísticas de Reportes
+
             </h4>
+
         </div>
 
         <div class="card-body">
+
             <div class="row">
+
                 <div class="col-md-6">
+
                     <canvas id="grafico"></canvas>
+
                 </div>
 
                 <div class="col-md-6">
+
                     <canvas id="graficoPastel"></canvas>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
     {% endif %}
+        <!-- BUSCADOR -->
 
-    <!-- BUSCADOR -->
+    <div class="buscador-card">
 
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <form method="GET">
-                <div class="input-group">
-                    <input
-                        type="text"
-                        name="buscar"
-                        value="{{ buscar }}"
-                        class="form-control"
-                        placeholder="Buscar por nombre, equipo o laboratorio">
+        <form method="GET">
 
-                    <button class="btn btn-primary">
-                        <i class="bi bi-search"></i>
-                        Buscar
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="buscar"
+                    value="{{ buscar }}"
+                    class="form-control"
+                    placeholder="Buscar por nombre, equipo o laboratorio">
+
+                <button class="btn btn-primary">
+
+                    <i class="bi bi-search"></i>
+
+                    Buscar
+
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
 
     <!-- BOTONES -->
 
-    <div class="text-center mb-4">
+    <div class="acciones-reportes">
 
-        <a href="{% url 'nuevo_reporte' %}" class="btn btn-success shadow">
+        <a href="{% url 'nuevo_reporte' %}" class="btn btn-success">
+
             <i class="bi bi-plus-circle"></i>
+
             Nuevo Reporte
+
         </a>
 
-        <a href="{% url 'reporte_pdf' %}" class="btn btn-danger shadow">
+        <a href="{% url 'reporte_pdf' %}" class="btn btn-danger">
+
             <i class="bi bi-file-earmark-pdf"></i>
+
             Descargar PDF
+
         </a>
 
-        <a href="{% url 'reporte_excel' %}" class="btn btn-success shadow">
+        <a href="{% url 'reporte_excel' %}" class="btn btn-success">
+
             <i class="bi bi-file-earmark-excel"></i>
+
             Descargar Excel
+
         </a>
 
     </div>
-        <!-- TABLA -->
 
-    <div id="tabla" class="card shadow-lg">
+    <!-- TABLA -->
+
+    <div id="tabla" class="card shadow-lg card-tabla">
 
         <div class="card-header bg-primary text-white">
 
@@ -366,9 +642,13 @@
                 <i class="bi bi-table"></i>
 
                 {% if user.is_superuser %}
+
                     Todos los Reportes Registrados
+
                 {% else %}
+
                     Mis Reportes Registrados
+
                 {% endif %}
 
             </h4>
@@ -377,21 +657,30 @@
 
         <div class="card-body">
 
-            <div class="table-responsive">
+            <div class="tabla-scroll">
 
                 <table class="table table-bordered table-hover align-middle">
 
                     <thead class="table-dark text-center">
 
                         <tr>
+
                             <th>Nombre</th>
+
                             <th>Cédula</th>
+
                             <th>Fecha</th>
+
                             <th>Laboratorio</th>
+
                             <th>Equipo</th>
+
                             <th>Estado</th>
+
                             <th>Imagen</th>
+
                             <th>Acciones</th>
+
                         </tr>
 
                     </thead>
@@ -415,19 +704,29 @@
                             <td>
 
                                 {% if reporte.estado == "Pendiente" %}
+
                                     <span class="badge bg-danger">
+
                                         Pendiente
+
                                     </span>
 
                                 {% elif reporte.estado == "En proceso" %}
+
                                     <span class="badge bg-warning text-dark">
+
                                         En proceso
+
                                     </span>
 
                                 {% else %}
+
                                     <span class="badge bg-success">
+
                                         Resuelto
+
                                     </span>
+
                                 {% endif %}
 
                             </td>
@@ -435,14 +734,19 @@
                             <td>
 
                                 {% if reporte.imagen %}
+
                                     <img src="{{ reporte.imagen.url }}"
                                          width="100"
                                          class="img-thumbnail shadow">
 
                                 {% else %}
+
                                     <span class="text-muted">
+
                                         Sin imagen
+
                                     </span>
+
                                 {% endif %}
 
                             </td>
@@ -450,29 +754,31 @@
                             <td>
 
                                 {% if user.is_superuser %}
-                                    
+
                                     <a href="{% url 'historial_reporte' reporte.id %}"
-   class="btn btn-info btn-sm text-white">
+                                       class="btn btn-info btn-sm text-white mb-1">
 
-    <i class="bi bi-clock-history"></i>
+                                        <i class="bi bi-clock-history"></i>
 
-    Historial
+                                        Historial
 
-</a>
+                                    </a>
 
                                     <a href="{% url 'editar_reporte' reporte.id %}"
-                                       class="btn btn-warning btn-sm">
+                                       class="btn btn-warning btn-sm mb-1">
 
                                         <i class="bi bi-pencil-square"></i>
+
                                         Editar
 
                                     </a>
 
                                     <a href="{% url 'eliminar_reporte' reporte.id %}"
-                                       class="btn btn-danger btn-sm"
+                                       class="btn btn-danger btn-sm mb-1"
                                        onclick="return confirm('¿Está seguro de eliminar este reporte?')">
 
                                         <i class="bi bi-trash"></i>
+
                                         Eliminar
 
                                     </a>
@@ -480,7 +786,9 @@
                                 {% else %}
 
                                     <span class="text-muted">
+
                                         Sin permisos
+
                                     </span>
 
                                 {% endif %}
@@ -492,9 +800,13 @@
                         {% empty %}
 
                         <tr>
+
                             <td colspan="8" class="text-center">
+
                                 No existen reportes registrados.
+
                             </td>
+
                         </tr>
 
                         {% endfor %}
@@ -509,170 +821,197 @@
 
     </div>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- FOOTER -->
 
     <footer>
 
         <h5>
+
             Reporte de Daños
+
         </h5>
 
-        <p>
-            
-        </p>
-
         <small>
+
             © 2026
+
         </small>
 
     </footer>
 
 </div>
-
 {% if user.is_superuser %}
-
-<!-- CHART JS -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
-// DATOS
+    const pendientes = {{ pendientes }};
 
-const pendientes = {{ pendientes }};
-const proceso = {{ proceso }};
-const resueltos = {{ resueltos }};
+    const proceso = {{ proceso }};
 
-// GRÁFICO DE BARRAS
+    const resueltos = {{ resueltos }};
 
-const ctx = document.getElementById("grafico");
+    const ctx = document.getElementById("grafico");
 
-new Chart(ctx, {
+    new Chart(ctx, {
 
-    type: "bar",
+        type: "bar",
 
-    data: {
+        data: {
 
-        labels: [
-            "Pendientes",
-            "En proceso",
-            "Resueltos"
-        ],
+            labels: [
 
-        datasets: [{
+                "Pendientes",
 
-            label: "Cantidad de Reportes",
+                "En proceso",
 
-            data: [
-                pendientes,
-                proceso,
-                resueltos
+                "Resueltos"
+
             ],
 
-            backgroundColor: [
-                "#dc3545",
-                "#ffc107",
-                "#198754"
-            ],
+            datasets: [{
 
-            borderColor: [
-                "#dc3545",
-                "#ffc107",
-                "#198754"
-            ],
+                label: "Cantidad de Reportes",
 
-            borderWidth: 2
+                data: [
 
-        }]
+                    pendientes,
 
-    },
+                    proceso,
 
-    options: {
+                    resueltos
 
-        responsive: true,
+                ],
 
-        plugins: {
+                backgroundColor: [
 
-            legend: {
-                display: true
-            }
+                    "#dc3545",
+
+                    "#ffc107",
+
+                    "#198754"
+
+                ],
+
+                borderColor: [
+
+                    "#dc3545",
+
+                    "#ffc107",
+
+                    "#198754"
+
+                ],
+
+                borderWidth: 2
+
+            }]
 
         },
 
-        scales: {
+        options: {
 
-            y: {
+            responsive: true,
 
-                beginAtZero: true,
+            plugins: {
 
-                ticks: {
-                    stepSize: 1
+                legend: {
+
+                    display: true
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        stepSize: 1
+
+                    }
+
                 }
 
             }
 
         }
 
-    }
+    });
 
-});
+    const ctxPie = document.getElementById("graficoPastel");
 
-//GRÁFICO DE PASTEL
+    new Chart(ctxPie, {
 
-const ctxPie = document.getElementById("graficoPastel");
+        type: "pie",
 
-new Chart(ctxPie, {
+        data: {
 
-    type: "pie",
+            labels: [
 
-    data: {
+                "Pendientes",
 
-        labels: [
-            "Pendientes",
-            "En proceso",
-            "Resueltos"
-        ],
+                "En proceso",
 
-        datasets: [{
+                "Resueltos"
 
-            data: [
-                pendientes,
-                proceso,
-                resueltos
             ],
 
-            backgroundColor: [
-                "#dc3545",
-                "#ffc107",
-                "#198754"
-            ],
+            datasets: [{
 
-            hoverOffset: 15
+                data: [
 
-        }]
+                    pendientes,
 
-    },
+                    proceso,
 
-    options: {
+                    resueltos
 
-        responsive: true,
+                ],
 
-        plugins: {
+                backgroundColor: [
 
-            legend: {
-                position: "bottom"
+                    "#dc3545",
+
+                    "#ffc107",
+
+                    "#198754"
+
+                ],
+
+                hoverOffset: 15
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    position: "bottom"
+
+                }
+
             }
 
         }
 
-    }
-
-});
+    });
 
 </script>
 
 {% endif %}
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
